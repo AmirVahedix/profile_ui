@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:profile_ui/SkillItem.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,10 @@ class MyApp extends StatelessWidget {
             ),
             headline2: TextStyle(
               fontSize: 14,
+              color: Colors.white,
+            ),
+            headline3: TextStyle(
+              fontSize: 13,
               color: Colors.white,
             ),
             headline6: TextStyle(
@@ -130,6 +135,45 @@ class Home extends StatelessWidget {
               ),
             ),
             Divider(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Skills",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 4),
+                      Icon(
+                        CupertinoIcons.chevron_down,
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Center(
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        SkillItem(),
+                        SkillItem(),
+                        SkillItem(),
+                        SkillItem(),
+                        SkillItem(),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
