@@ -83,7 +83,7 @@ class Home extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
-                      "assets/images/new_profile.jpg",
+                      "assets/images/profile.jpg",
                       width: 72,
                     ),
                   ),
@@ -144,10 +144,10 @@ class Home extends StatelessWidget {
                     children: [
                       Text(
                         "Skills",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1!
-                            .copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                       ),
                       SizedBox(width: 4),
                       Icon(
@@ -156,18 +156,43 @@ class Home extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 24),
                   Center(
                     child: Wrap(
                       direction: Axis.horizontal,
-                      spacing: 8,
-                      runSpacing: 8,
+                      spacing: 20,
+                      runSpacing: 20,
                       children: [
-                        SkillItem(),
-                        SkillItem(),
-                        SkillItem(),
-                        SkillItem(),
-                        SkillItem(),
+                        SkillItem(
+                          text: "Photoshop",
+                          image: "assets/images/photoshop.png",
+                          isActive: true,
+                          shadowColor: Colors.blue,
+                        ),
+                        SkillItem(
+                          text: "Adobe XD",
+                          image: "assets/images/xd.png",
+                          isActive: false,
+                          shadowColor: Colors.pink,
+                        ),
+                        SkillItem(
+                          text: "illustrator",
+                          image: "assets/images/illustrator.png",
+                          isActive: false,
+                          shadowColor: Colors.orange,
+                        ),
+                        SkillItem(
+                          text: "After Effect",
+                          image: "assets/images/aftereffects.png",
+                          isActive: false,
+                          shadowColor: Colors.blue.shade800,
+                        ),
+                        SkillItem(
+                          text: "Lightroom",
+                          image: "assets/images/lightroom.png",
+                          isActive: false,
+                          shadowColor: Colors.blue.shade600,
+                        ),
                       ],
                     ),
                   )
