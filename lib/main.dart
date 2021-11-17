@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:profile_ui/SkillItem.dart';
 
@@ -13,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode themeMode = ThemeMode.dark;
+  ThemeMode themeMode = ThemeMode.light;
 
   void toggleThemeMode() {
     setState(() {
@@ -29,6 +31,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale('fa'),
       theme: themeMode == ThemeMode.dark
           ? MyAppThemeConfig.dark().getTheme()
           : MyAppThemeConfig.light().getTheme(),
@@ -149,10 +159,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final _locale = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Amir Vahedi',
+          _locale.title,
           style: Theme.of(context).textTheme.headline6,
         ),
         actions: [
@@ -187,12 +199,12 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Amir Vahedix",
+                          _locale.name,
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         SizedBox(height: 4),
                         Text(
-                          "Full-Stack Developer",
+                          _locale.job,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: 4),
@@ -206,7 +218,7 @@ class _HomeState extends State<Home> {
                             ),
                             SizedBox(width: 2),
                             Text(
-                              "Tehran, Iran",
+                              _locale.location,
                               style: Theme.of(context).textTheme.subtitle2,
                             ),
                           ],
@@ -224,7 +236,7 @@ class _HomeState extends State<Home> {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
               child: Text(
-                "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum",
+                _locale.summary,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
