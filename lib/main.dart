@@ -55,7 +55,22 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+enum Skill { photoshop, xd, illustrator, afterEffects, lightRoom }
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  Skill _skill = Skill.photoshop;
+
+  void _updateSelectedSkill(Skill skill) {
+    setState(() {
+      this._skill = skill;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,34 +179,44 @@ class Home extends StatelessWidget {
                       runSpacing: 20,
                       children: [
                         SkillItem(
+                          type: Skill.photoshop,
                           text: "Photoshop",
                           image: "assets/images/photoshop.png",
-                          isActive: true,
+                          isActive: _skill == Skill.photoshop,
                           shadowColor: Colors.blue,
+                          onTap: () => _updateSelectedSkill(Skill.photoshop),
                         ),
                         SkillItem(
+                          type: Skill.xd,
                           text: "Adobe XD",
                           image: "assets/images/xd.png",
-                          isActive: false,
+                          isActive: _skill == Skill.xd,
                           shadowColor: Colors.pink,
+                          onTap: () => _updateSelectedSkill(Skill.xd),
                         ),
                         SkillItem(
+                          type: Skill.illustrator,
                           text: "illustrator",
                           image: "assets/images/illustrator.png",
-                          isActive: false,
+                          isActive: _skill == Skill.illustrator,
                           shadowColor: Colors.orange,
+                          onTap: () => _updateSelectedSkill(Skill.illustrator),
                         ),
                         SkillItem(
+                          type: Skill.afterEffects,
                           text: "After Effect",
                           image: "assets/images/aftereffects.png",
-                          isActive: false,
+                          isActive: _skill == Skill.afterEffects,
                           shadowColor: Colors.blue.shade800,
+                          onTap: () => _updateSelectedSkill(Skill.afterEffects),
                         ),
                         SkillItem(
+                          type: Skill.lightRoom,
                           text: "Lightroom",
                           image: "assets/images/lightroom.png",
-                          isActive: false,
+                          isActive: _skill == Skill.lightRoom,
                           shadowColor: Colors.blue.shade600,
+                          onTap: () => _updateSelectedSkill(Skill.lightRoom),
                         ),
                       ],
                     ),
