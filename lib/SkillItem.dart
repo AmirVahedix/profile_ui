@@ -27,7 +27,7 @@ class SkillItem extends StatelessWidget {
       child: Container(
         decoration: isActive
             ? BoxDecoration(
-                color: Color.fromARGB(20, 255, 255, 255),
+                color: Theme.of(context).hintColor,
                 borderRadius: BorderRadius.circular(16),
               )
             : null,
