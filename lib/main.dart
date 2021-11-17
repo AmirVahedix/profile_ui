@@ -13,8 +13,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
         primaryColor: Colors.pink.shade900,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.pink.shade400),
+            elevation: MaterialStateProperty.all(0),
+          ),
+        ),
         textTheme: GoogleFonts.latoTextTheme(
           TextTheme(
             bodyText1: TextStyle(
@@ -42,6 +48,13 @@ class MyApp extends StatelessWidget {
               color: Color.fromARGB(200, 255, 255, 255),
             ),
           ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
         ),
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Color.fromARGB(255, 30, 30, 30),
@@ -87,8 +100,10 @@ class _HomeState extends State<Home> {
         ],
         elevation: 0,
       ),
-      body: Center(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 32, 32, 16),
@@ -221,6 +236,47 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   )
+                ],
+              ),
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Personal Informations",
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                  ),
+                  SizedBox(height: 24),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      prefixIcon: Icon(CupertinoIcons.at),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      prefixIcon: Icon(CupertinoIcons.lock),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Save"),
+                      style: ButtonStyle(),
+                    ),
+                  ),
+                  SizedBox(height: 28),
                 ],
               ),
             ),
