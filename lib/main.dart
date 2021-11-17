@@ -40,8 +40,8 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale('fa'),
       theme: themeMode == ThemeMode.dark
-          ? MyAppThemeConfig.dark().getTheme()
-          : MyAppThemeConfig.light().getTheme(),
+          ? MyAppThemeConfig.dark().getTheme('fa')
+          : MyAppThemeConfig.light().getTheme('fa'),
       home: Home(toggleThemeMode: toggleThemeMode),
       debugShowCheckedModeBanner: false,
     );
@@ -49,6 +49,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyAppThemeConfig {
+  static const faPrimaryFontFamily = "iransans";
+
   final Color primaryColor = Colors.pink.shade400;
   final Color primaryTextColor;
   final Color secondaryTextColor;
@@ -76,7 +78,7 @@ class MyAppThemeConfig {
         appBarTextColor = Colors.white,
         brightness = Brightness.light;
 
-  ThemeData getTheme() {
+  ThemeData getTheme(String languageCode) {
     return ThemeData(
       primarySwatch: Colors.pink,
       primaryColor: primaryColor,
@@ -86,39 +88,7 @@ class MyAppThemeConfig {
           elevation: MaterialStateProperty.all(0),
         ),
       ),
-      textTheme: GoogleFonts.latoTextTheme(
-        TextTheme(
-          bodyText1: TextStyle(
-            fontSize: 15,
-            color: secondaryTextColor,
-          ),
-          headline1: TextStyle(
-            fontSize: 18,
-            color: primaryTextColor,
-          ),
-          headline2: TextStyle(
-            fontSize: 14,
-            color: primaryTextColor,
-          ),
-          headline3: TextStyle(
-            fontSize: 13,
-            color: primaryTextColor,
-          ),
-          headline6: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-            color: appBarTextColor,
-          ),
-          subtitle1: TextStyle(
-            fontSize: 16,
-            color: primaryTextColor,
-          ),
-          subtitle2: TextStyle(
-            fontSize: 12,
-            color: secondaryTextColor,
-          ),
-        ),
-      ),
+      textTheme: languageCode == "en" ? enPrimaryTextTheme : faPrimaryTextTheme,
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -132,6 +102,85 @@ class MyAppThemeConfig {
       scaffoldBackgroundColor: backgroundColor,
       appBarTheme: AppBarTheme(
         backgroundColor: appBarColor,
+      ),
+    );
+  }
+
+  TextTheme get enPrimaryTextTheme {
+    return GoogleFonts.latoTextTheme(
+      TextTheme(
+        bodyText1: TextStyle(
+          fontSize: 15,
+          color: secondaryTextColor,
+        ),
+        headline1: TextStyle(
+          fontSize: 18,
+          color: primaryTextColor,
+        ),
+        headline2: TextStyle(
+          fontSize: 14,
+          color: primaryTextColor,
+        ),
+        headline3: TextStyle(
+          fontSize: 13,
+          color: primaryTextColor,
+        ),
+        headline6: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
+          color: appBarTextColor,
+        ),
+        subtitle1: TextStyle(
+          fontSize: 16,
+          color: primaryTextColor,
+        ),
+        subtitle2: TextStyle(
+          fontSize: 12,
+          color: secondaryTextColor,
+        ),
+      ),
+    );
+  }
+
+  TextTheme get faPrimaryTextTheme {
+    return TextTheme(
+      bodyText1: TextStyle(
+        fontSize: 13,
+        color: secondaryTextColor,
+        fontFamily: faPrimaryFontFamily,
+        fontWeight: FontWeight.w500,
+      ),
+      headline1: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+        color: primaryTextColor,
+        fontFamily: faPrimaryFontFamily,
+      ),
+      headline2: TextStyle(
+        fontSize: 14,
+        color: primaryTextColor,
+        fontFamily: faPrimaryFontFamily,
+      ),
+      headline3: TextStyle(
+        fontSize: 13,
+        color: primaryTextColor,
+        fontFamily: faPrimaryFontFamily,
+      ),
+      headline6: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+        color: appBarTextColor,
+        fontFamily: faPrimaryFontFamily,
+      ),
+      subtitle1: TextStyle(
+        fontSize: 16,
+        color: primaryTextColor,
+        fontFamily: faPrimaryFontFamily,
+      ),
+      subtitle2: TextStyle(
+        fontSize: 12,
+        color: secondaryTextColor,
+        fontFamily: faPrimaryFontFamily,
       ),
     );
   }
