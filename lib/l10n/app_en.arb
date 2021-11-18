@@ -3,5 +3,13 @@
   "name": "Amir Vahedi",
   "job": "Full-Stack Developer",
   "location": "Iran, Tehran",
-  "summary": "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum"
+  "summary": "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum",
+  "selectedLanguage": "Selected Language",
+  "enLanguage": "English",
+  "faLanguage": "Farsi",
+  "skills": "Skills",
+  "personalInformations": "Personal Informations",
+  "email": "Email",
+  "password": "Password",
+  "save": "Save"
 }

@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ThemeMode themeMode = ThemeMode.light;
+  Locale _locale = Locale('fa');
 
   void toggleThemeMode() {
     setState(() {
@@ -24,6 +25,12 @@ class _MyAppState extends State<MyApp> {
       } else {
         this.themeMode = ThemeMode.dark;
       }
+    });
+  }
+
+  void toggleLanguage(Language language) {
+    setState(() {
+      this._locale = Locale(language == Language.en ? "en" : "fa");
     });
   }
 
@@ -38,11 +45,14 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale('fa'),
+      locale: Locale(_locale.languageCode),
       theme: themeMode == ThemeMode.dark
-          ? MyAppThemeConfig.dark().getTheme('fa')
-          : MyAppThemeConfig.light().getTheme('fa'),
-      home: Home(toggleThemeMode: toggleThemeMode),
+          ? MyAppThemeConfig.dark().getTheme(_locale.languageCode)
+          : MyAppThemeConfig.light().getTheme(_locale.languageCode),
+      home: Home(
+        toggleThemeMode: toggleThemeMode,
+        selectedLanguageChanged: toggleLanguage,
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -149,6 +159,7 @@ class MyAppThemeConfig {
         color: secondaryTextColor,
         fontFamily: faPrimaryFontFamily,
         fontWeight: FontWeight.w500,
+        height: 1.5,
       ),
       headline1: TextStyle(
         fontSize: 18,
@@ -188,10 +199,17 @@ class MyAppThemeConfig {
 
 enum Skill { photoshop, xd, illustrator, afterEffects, lightRoom }
 
+enum Language { fa, en }
+
 class Home extends StatefulWidget {
   final Function() toggleThemeMode;
+  final Function(Language language) selectedLanguageChanged;
 
-  const Home({Key? key, required this.toggleThemeMode});
+  const Home({
+    Key? key,
+    required this.toggleThemeMode,
+    required this.selectedLanguageChanged,
+  });
 
   @override
   _HomeState createState() => _HomeState();
@@ -199,6 +217,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Skill _skill = Skill.photoshop;
+  Language _language = Language.fa;
 
   void _updateSelectedSkill(Skill skill) {
     setState(() {
@@ -206,14 +225,21 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _updateSelectedLanguage(Language language) {
+    widget.selectedLanguageChanged(language);
+    setState(() {
+      this._language = language;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _locale = AppLocalizations.of(context)!;
+    final _localization = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _locale.title,
+          _localization.title,
           style: Theme.of(context).textTheme.headline6,
         ),
         actions: [
@@ -248,12 +274,12 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _locale.name,
+                          _localization.name,
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         SizedBox(height: 4),
                         Text(
-                          _locale.job,
+                          _localization.job,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: 4),
@@ -267,7 +293,7 @@ class _HomeState extends State<Home> {
                             ),
                             SizedBox(width: 2),
                             Text(
-                              _locale.location,
+                              _localization.location,
                               style: Theme.of(context).textTheme.subtitle2,
                             ),
                           ],
@@ -285,8 +311,36 @@ class _HomeState extends State<Home> {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
               child: Text(
-                _locale.summary,
+                _localization.summary,
                 style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    _localization.selectedLanguage,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  CupertinoSlidingSegmentedControl<Language>(
+                    children: {
+                      Language.en: Text(
+                        _localization.enLanguage,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      Language.fa: Text(
+                        _localization.faLanguage,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    },
+                    groupValue: _language,
+                    onValueChanged: (value) =>
+                        {if (value != null) _updateSelectedLanguage(value)},
+                  )
+                ],
               ),
             ),
             Divider(),
@@ -298,7 +352,7 @@ class _HomeState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "Skills",
+                        _localization.skills,
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -371,7 +425,7 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Personal Informations",
+                    _localization.personalInformations,
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -380,14 +434,14 @@ class _HomeState extends State<Home> {
                   SizedBox(height: 24),
                   TextField(
                     decoration: InputDecoration(
-                      labelText: "Email",
+                      labelText: _localization.email,
                       prefixIcon: Icon(CupertinoIcons.at),
                     ),
                   ),
                   SizedBox(height: 12),
                   TextField(
                     decoration: InputDecoration(
-                      labelText: "Password",
+                      labelText: _localization.password,
                       prefixIcon: Icon(CupertinoIcons.lock),
                     ),
                   ),
@@ -397,7 +451,13 @@ class _HomeState extends State<Home> {
                     height: 48,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Text("Save"),
+                      child: Text(
+                        _localization.save,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(fontSize: 15),
+                      ),
                       style: ButtonStyle(),
                     ),
                   ),
